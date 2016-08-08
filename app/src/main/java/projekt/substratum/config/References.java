@@ -29,7 +29,6 @@ import projekt.substratum.R;
 public class References {
 
     // This int controls the notification identifier
-    public static int firebase_notification_id = 24862486;
     public static int notification_id = 2486;
 
     // Universal switch for Application-wide Debugging
