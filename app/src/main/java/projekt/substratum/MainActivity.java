@@ -410,8 +410,6 @@ public class MainActivity extends AppCompatActivity implements
             // Exception: At this point, Masquerade is not installed at all.
         }
 
-        Root.requestRootAccess();
-
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(
                 getApplicationContext());
         if (References.checkOMS()) {
