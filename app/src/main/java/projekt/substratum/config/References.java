@@ -40,7 +40,7 @@ public class References {
     public static String metadataLegacy = "Substratum_Legacy";
     public static String metadataVersion = "Substratum_Plugin";
 
-    // This method configures the new devices and their configuration of their vendor folders
+    // This int controls the default priority level for legacy overlays
     public static int DEFAULT_PRIORITY = 50;
 
     // This method is used to determine whether there the system is initiated with OMS
@@ -83,7 +83,8 @@ public class References {
         prefs = context.getSharedPreferences("substratum_state", Context.MODE_PRIVATE);
         prefs.edit().putBoolean("is_updating", false).apply();
     }
-
+    
+    // This method configures the new devices and their configuration of their vendor folders
     public static Boolean inNexusFilter() {
         String[] nexus_filter = {"angler", "bullhead", "flounder", "marlin", "sailfish"};
         return Arrays.asList(nexus_filter).contains(Build.DEVICE);
@@ -115,12 +116,19 @@ public class References {
         String[] allowed_overlays = {
                 "com.android.systemui.headers",
                 "com.android.systemui.navbars",
-                "com.android.systemui.statusbars"
+                "com.android.systemui.statusbars",
+                "com.android.systemui.tiles"
         };
         return Arrays.asList(allowed_overlays).contains(current);
     }
 
-    // This boolean controls the DEBUG level of the application
+    // This string array contains all the Settings acceptable overlay packs
+    public static Boolean allowedSettingsOverlay(String current) {
+        String[] allowed_overlays = {
+                "com.android.settings.icons",
+        };
+        return Arrays.asList(allowed_overlays).contains(current);
+    }
 
     // This string array contains all the SystemUI acceptable sound files
     public static Boolean allowedUISound(String targetValue) {
@@ -130,8 +138,6 @@ public class References {
                 "low_battery_sound"};
         return Arrays.asList(allowed_themable).contains(targetValue);
     }
-
-    // This int controls the default priority level for legacy overlays
 
     // This string array contains all the legacy allowed folders
     public static Boolean allowedForLegacy(String targetValue) {
@@ -177,7 +183,11 @@ public class References {
             if (References.allowedSystemUIOverlay(package_name)) {
                 icon = context.getPackageManager().getApplicationIcon("com.android.systemui");
             } else {
-                icon = context.getPackageManager().getApplicationIcon(package_name);
+                if (References.allowedSettingsOverlay(package_name)) {
+                    icon = context.getPackageManager().getApplicationIcon("com.android.settings");
+                } else {
+                    icon = context.getPackageManager().getApplicationIcon(package_name);
+                }
             }
         } catch (Exception e) {
             Log.e("SubstratumLogger", "Could not grab the application icon for \"" + package_name
