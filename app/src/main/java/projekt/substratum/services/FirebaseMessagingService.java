@@ -31,7 +31,9 @@ public class FirebaseMessagingService extends
                         .setAutoCancel(true)
                         .setSmallIcon(R.mipmap.main_launcher)
                         .setContentTitle(getString(R.string.app_name))
-                        .setContentText(remoteMessage.getNotification().getBody());
+                        .setContentText(remoteMessage.getNotification().getBody())
+                        .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(remoteMessage.getNotification().getBody()));
         Notification notification = mBuilder.build();
         notificationManager.notify(References.firebase_notification_id, notification);
     }
