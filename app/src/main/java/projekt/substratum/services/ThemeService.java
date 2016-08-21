@@ -1,9 +1,9 @@
 package projekt.substratum.services;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.IBinder;
 
 import projekt.substratum.util.AntiPiracyCheck;
@@ -14,6 +14,12 @@ import projekt.substratum.util.AntiPiracyCheck;
 
 public class ThemeService extends Service {
 
+    private static Runnable runnable = null;
+    private Context context = this;
+    private Handler handler = null;
+
+    private int CONFIG_TIME_PIRACY_CHECKER = 60000; // 1 sec == 1000ms
+
     @Override
     public IBinder onBind(Intent intent) {
         return null;
@@ -21,19 +27,13 @@ public class ThemeService extends Service {
 
     @Override
     public void onCreate() {
-        AlarmManager alarm_manager = (AlarmManager) this.getSystemService(ALARM_SERVICE);
-        Intent alarm_intent = new Intent(this, ThemeService.class);
-        PendingIntent alarm_pendingintent = PendingIntent.getBroadcast(this, 0, alarm_intent, 0);
-
-        alarm_manager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME,
-                AlarmManager.INTERVAL_HALF_HOUR,
-                AlarmManager.INTERVAL_HALF_HOUR,
-                alarm_pendingintent);
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        new AntiPiracyCheck().AntiPiracyCheck(this);
-        return START_STICKY;
+        handler = new Handler();
+        runnable = new Runnable() {
+            public void run() {
+                new AntiPiracyCheck().AntiPiracyCheck(context);
+                handler.postDelayed(runnable, CONFIG_TIME_PIRACY_CHECKER);
+            }
+        };
+        handler.postDelayed(runnable, CONFIG_TIME_PIRACY_CHECKER);
     }
 }
