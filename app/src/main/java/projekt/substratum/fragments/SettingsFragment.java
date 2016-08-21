@@ -35,11 +35,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                     .getResourcesForApplication(settingsPackageName);
             int substratum_icon = res.getIdentifier(settingsPackageName + ":drawable/" +
                     settingsSubstratumDrawableName, "drawable", settingsPackageName);
-            if (substratum_icon != 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return substratum_icon != 0;
         } catch (Exception e) {
             Log.e("SubstratumLogger", "Could not load drawable from Settings.apk.");
         }
@@ -61,7 +57,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 ("about_substratum");
         aboutSubstratum.setSummary(BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE +
                 ")");
-        aboutSubstratum.setIcon(getResources().getDrawable(R.mipmap.main_launcher));
+        aboutSubstratum.setIcon(getResources().getDrawable(R.mipmap.main_launcher, null));
         aboutSubstratum.setOnPreferenceClickListener(
                 new Preference.OnPreferenceClickListener() {
                     @Override
@@ -77,7 +73,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         if (References.checkOMS()) {
             Preference aboutMasquerade = getPreferenceManager().findPreference
                     ("about_masquerade");
-            aboutMasquerade.setIcon(getResources().getDrawable(R.mipmap.restore_launcher));
+            aboutMasquerade.setIcon(getResources().getDrawable(R.mipmap.restore_launcher, null));
             aboutMasquerade.setOnPreferenceClickListener(
                     new Preference.OnPreferenceClickListener() {
                         @Override

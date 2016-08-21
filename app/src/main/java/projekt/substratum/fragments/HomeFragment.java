@@ -310,7 +310,7 @@ public class HomeFragment extends Fragment {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         if (prefs.getInt(
                 "uninstalled", THEME_INFORMATION_REQUEST_CODE) == THEME_INFORMATION_REQUEST_CODE) {
-            prefs.edit().putInt("uninstalled", 0).commit();
+            prefs.edit().putInt("uninstalled", 0).apply();
             refreshLayout();
         }
         super.onResume();
@@ -440,7 +440,7 @@ public class HomeFragment extends Fragment {
         private int position;
         private String sUrl;
 
-        public SubstratumThemeUpdate(String strValue, int intValue) {
+        SubstratumThemeUpdate(String strValue, int intValue) {
             this.position = intValue;
             this.sUrl = strValue;
         }

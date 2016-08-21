@@ -566,9 +566,8 @@ public class ProfileFragment extends Fragment {
                         ApplicationInfo applicationInfo = getContext().getPackageManager()
                                 .getApplicationInfo
                                         (package_id, 0);
-                        String packageTitle = getContext().getPackageManager().getApplicationLabel
+                        package_name = getContext().getPackageManager().getApplicationLabel
                                 (applicationInfo).toString();
-                        package_name = packageTitle;
                     } catch (Exception e) {
                         Log.e("SubstratumLogger", "Could not find explicit package identifier" +
                                 " in package manager list.");

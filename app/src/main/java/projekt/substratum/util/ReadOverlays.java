@@ -13,12 +13,11 @@ import java.util.List;
 
 public class ReadOverlays {
 
-    private static String OVERLAY_MANAGER_STATE_NOT_APPROVED = "---";
-    private static String OVERLAY_MANAGER_STATE_DISABLED = "[ ]";
-    private static String OVERLAY_MANAGER_STATE_ENABLED = "[x]";
-
     public static List<String> main(int state_count) {
 
+        String OVERLAY_MANAGER_STATE_NOT_APPROVED = "---";
+        String OVERLAY_MANAGER_STATE_DISABLED = "[ ]";
+        String OVERLAY_MANAGER_STATE_ENABLED = "[x]";
         String CURRENT_SELECTION = OVERLAY_MANAGER_STATE_NOT_APPROVED;
         List<String> list = new ArrayList<>();
         Process nativeApp = null;
