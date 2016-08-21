@@ -20,8 +20,8 @@ android {
         applicationId "projekt.substratum"
         minSdkVersion 23
         targetSdkVersion 24
-        versionCode 218
-        versionName "two hundred eighteen"
+        versionCode 219
+        versionName "two hundred nineteen"
         renderscriptTargetApi 23
         renderscriptSupportModeEnabled true
     }
@@ -109,7 +109,7 @@ dependencies {
     compile files('src/main/libs/zipsigner-lib-1.17.jar')
 
     // ZT Zip
-    compile project(':libraries:ztzip')
+    compile group: 'org.zeroturnaround', name: 'zt-zip', version: '1.8'
 }
 
 apply plugin: 'com.google.gms.google-services'
