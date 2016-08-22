@@ -73,6 +73,7 @@ public class AntiPiracyCheck {
             installed.addAll(installed_themes);
             SharedPreferences.Editor edit = prefs.edit();
             edit.putStringSet("installed_themes", installed);
+            edit.putBoolean("packages_changed", false);
             edit.apply();
             return null;
         }

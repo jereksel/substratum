@@ -41,36 +41,49 @@ public class DetectionReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         this.mContext = context;
-        Uri packageName = intent.getData();
-        String package_name = packageName.toString().substring(8);
-        try {
-            ApplicationInfo appInfo = context.getPackageManager().getApplicationInfo(
-                    package_name, PackageManager.GET_META_DATA);
-            if (appInfo.metaData != null) {
-                if (!References.checkOMS()) {
-                    if (appInfo.metaData.getBoolean(References.metadataLegacy, false)) {
-                        if (appInfo.metaData.getString(References.metadataName) != null) {
-                            if (appInfo.metaData.getString(References.metadataAuthor) != null) {
-                                Log.d("SubstratumDetector", "Substratum is now initializing: " +
-                                        package_name);
-                                MainFunction mainFunction = new MainFunction();
-                                mainFunction.execute("");
+        String action = intent.getAction();
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(mContext).edit();
+
+        switch (action) {
+            case Intent.ACTION_PACKAGE_ADDED:
+                editor.putBoolean("packages_changed", true);
+                editor.apply();
+                Uri packageName = intent.getData();
+                String package_name = packageName.toString().substring(8);
+                try {
+                    ApplicationInfo appInfo = context.getPackageManager().getApplicationInfo(
+                            package_name, PackageManager.GET_META_DATA);
+                    if (appInfo.metaData != null) {
+                        if (!References.checkOMS()) {
+                            if (appInfo.metaData.getBoolean(References.metadataLegacy, false)) {
+                                if (appInfo.metaData.getString(References.metadataName) != null) {
+                                    if (appInfo.metaData.getString(References.metadataAuthor) != null) {
+                                        Log.d("SubstratumDetector", "Substratum is now initializing: " +
+                                                package_name);
+                                        MainFunction mainFunction = new MainFunction();
+                                        mainFunction.execute("");
+                                    }
+                                }
+                            }
+                        } else {
+                            if (appInfo.metaData.getString(References.metadataName) != null) {
+                                if (appInfo.metaData.getString(References.metadataAuthor) != null) {
+                                    Log.d("SubstratumDetector", "Substratum is now initializing: " +
+                                            package_name);
+                                    MainFunction mainFunction = new MainFunction();
+                                    mainFunction.execute("");
+                                }
                             }
                         }
                     }
-                } else {
-                    if (appInfo.metaData.getString(References.metadataName) != null) {
-                        if (appInfo.metaData.getString(References.metadataAuthor) != null) {
-                            Log.d("SubstratumDetector", "Substratum is now initializing: " +
-                                    package_name);
-                            MainFunction mainFunction = new MainFunction();
-                            mainFunction.execute("");
-                        }
-                    }
+                } catch (Exception e) {
+                    // Exception
                 }
-            }
-        } catch (Exception e) {
-            // Exception
+                break;
+            case Intent.ACTION_PACKAGE_FULLY_REMOVED:
+                editor.putBoolean("packages_changed", true);
+                editor.apply();
+                break;
         }
     }
 
