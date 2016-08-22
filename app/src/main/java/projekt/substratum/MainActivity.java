@@ -496,6 +496,15 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        SharedPreferences.Editor editor = PreferenceManager
+                .getDefaultSharedPreferences(getApplicationContext()).edit();
+        editor.remove("packages_changed");
+        editor.apply();
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         if (permissionCheck == PackageManager.PERMISSION_GRANTED && permissionCheck2 ==
                 PackageManager.PERMISSION_GRANTED) {
