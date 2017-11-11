@@ -162,6 +162,7 @@ public class SplashScreenActivity extends Activity {
                 if (!prefs.contains(dateFormat.format(new Date()))) {
                     Log.d(SUBSTRATUM_LOG, "Failed to withdraw blacklisted packages.");
                 }
+/*
 
                 if (isAndromedaDevice(context)) {
                     int andromedaVer = Packages.getAppVersionCode(context, ANDROMEDA_PACKAGE);
@@ -193,6 +194,7 @@ public class SplashScreenActivity extends Activity {
                         }
                     }
                 }
+*/
 
                 if (Systems.isSamsungDevice(context) &&
                         Packages.isPackageInstalled(context, SST_ADDON_PACKAGE)) {

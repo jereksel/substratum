@@ -311,9 +311,9 @@ public enum Systems {
         String installer = prefs.getString("andromeda_installer", "o");
 
         boolean andromedaPresent = isAndromedaDevice(context);
-        andromedaPresent &= installer.equals(PLAY_STORE_PACKAGE_NAME);
-        andromedaPresent &= fingerprint.toUpperCase(Locale.US)
-                .equals(expFingerprint.toUpperCase(Locale.US));
+//        andromedaPresent &= installer.equals(PLAY_STORE_PACKAGE_NAME);
+//        andromedaPresent &= fingerprint.toUpperCase(Locale.US)
+//                .equals(expFingerprint.toUpperCase(Locale.US));
         return andromedaPresent;
     }
 
